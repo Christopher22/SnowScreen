@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>snowflake.svg</file>
+    </qresource>
+</RCC>

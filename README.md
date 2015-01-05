@@ -1,4 +1,4 @@
-SnowScreen 1.0 by Christopher Gundler
+﻿SnowScreen 1.1 by Christopher Gundler
 ==========
 
 SnowScreen is a wintry screensaver for Microsoft® Windows. The Qt5-based executable shows falling snowflake upon your screen. This piece of software is Open Source, licensed under the GPL Version 3.

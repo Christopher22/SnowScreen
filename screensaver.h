@@ -14,6 +14,10 @@
 
 #include <Windows.h>
 
+#ifdef USE_OPENGL
+#include <QGLWidget>
+#endif
+
 class Screensaver : public QGraphicsView
 {
 public:

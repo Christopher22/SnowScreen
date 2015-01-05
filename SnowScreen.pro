@@ -1,9 +1,14 @@
-lessThan(QT_MAJOR_VERSION, 5) : error("SnowSceen requires Qt 5")
+lessThan(QT_MAJOR_VERSION, 5) : error("SnowSceen requires Qt5")
+!win32-* : error("SnowSceen requires Windows")
 
 QT       += core widgets gui svg
 TARGET = SnowScreen
 TEMPLATE = app
 CONFIG += c11
+
+#Comment the following line to disable OpenGL:
+DEFINES += USE_OPENGL
+contains(DEFINES, USE_OPENGL) : QT += opengl
 
 SOURCES += main.cpp\
         screensaver.cpp \

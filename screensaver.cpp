@@ -34,6 +34,10 @@ Screensaver::Screensaver() : QGraphicsView()
     this->setFrameShape(QGraphicsView::NoFrame);
     this->setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing, true);
     this->setCacheMode(QGraphicsView::CacheBackground);
+
+#ifdef USE_OPENGL
+    this->setViewport(new QGLWidget);
+#endif
 }
 
 void Screensaver::showScreensaver()

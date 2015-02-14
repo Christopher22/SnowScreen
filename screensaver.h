@@ -15,20 +15,21 @@
 #include <Windows.h>
 
 #ifdef USE_OPENGL
+#include <QGLFormat>
 #include <QGLWidget>
 #endif
 
 class Screensaver : public QGraphicsView
 {
 public:
-    enum Type {
+    enum ScreensaverType {
         GUI,
         PREVIEW,
         CONFIG,
         UNKNOW
     };
 
-    static Type getType();
+    static ScreensaverType getType();
 
     Screensaver();
     void showScreensaver();

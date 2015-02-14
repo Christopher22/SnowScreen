@@ -8,7 +8,7 @@
 
 #include "screensaver.h"
 
-Screensaver::Type Screensaver::getType()
+Screensaver::ScreensaverType Screensaver::getType()
 {
     static int cache = -1;
     if(cache == -1)
@@ -16,14 +16,14 @@ Screensaver::Type Screensaver::getType()
         QStringList args(qApp->arguments());
 
         if(args.contains("/s", Qt::CaseInsensitive))
-            cache = Type::GUI;
+            cache = (int)Screensaver::GUI;
         else if(args.indexOf(QRegExp("^\\/[cC](:[0-9]+)?$")) != -1)
-            cache = Type::CONFIG;
+            cache = (int)Screensaver::CONFIG;
         else
-            cache = (args.indexOf(QRegExp("^\\/[pP](:[0-9]+)?$")) != -1 ? Type::PREVIEW : Type::UNKNOW);
+            cache = (int)args.indexOf(QRegExp("^\\/[pP](:[0-9]+)?$")) != -1 ? Screensaver::PREVIEW : Screensaver::UNKNOW;
     }
 
-    return (Type)cache;
+    return (ScreensaverType)cache;
 }
 
 Screensaver::Screensaver() : QGraphicsView()
@@ -36,13 +36,18 @@ Screensaver::Screensaver() : QGraphicsView()
     this->setCacheMode(QGraphicsView::CacheBackground);
 
 #ifdef USE_OPENGL
-    this->setViewport(new QGLWidget);
+    QGLFormat fmt = QGLFormat::defaultFormat();
+    fmt.setSampleBuffers(true);
+    fmt.setDoubleBuffer(true);
+    fmt.setSamples(256);
+    fmt.setDirectRendering(true);
+    this->setViewport(new QGLWidget(fmt));
 #endif
 }
 
 void Screensaver::showScreensaver()
 {
-    if(Screensaver::getType() == Type::PREVIEW)
+    if(Screensaver::getType() == Screensaver::PREVIEW)
     {
         QWidget* preview = this->getPreviewWindow();
 
@@ -66,7 +71,7 @@ void Screensaver::showScreensaver()
 
 QWidget* Screensaver::getPreviewWindow(QWidget* parent) const
 {
-    if(Screensaver::getType() != Type::PREVIEW)
+    if(Screensaver::getType() != Screensaver::PREVIEW)
         return Q_NULLPTR;
 
     QStringList args = qApp->arguments();
